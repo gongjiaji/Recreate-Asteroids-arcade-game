@@ -9,6 +9,7 @@ public class BasicView extends JComponent{
 
     private BasicGame game;
 
+
     public BasicView(BasicGame game){
         this.game = game;
     }
@@ -22,6 +23,8 @@ public class BasicView extends JComponent{
         for (BasicAsteroid a : BasicGame.asteroids){
             a.draw(g);
         }
+
+        BasicGame.ship.draw(g);
     }
 
     @Override
