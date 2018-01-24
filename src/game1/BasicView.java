@@ -17,8 +17,11 @@ public class BasicView extends JComponent{
     public void paintComponent(Graphics g0) {
         Graphics2D g = (Graphics2D) g0;
         g.setColor(BG_COLOR);
-        System.out.println("Painting");
         g.fillRect(0, 0, getWidth(), getHeight());
+
+        for (BasicAsteroid a : BasicGame.asteroids){
+            a.draw(g);
+        }
     }
 
     @Override
