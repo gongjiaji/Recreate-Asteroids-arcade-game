@@ -24,24 +24,23 @@ public class BasicShip {
         this.ctrl = ctrl;
         position = new Vector2D(FRAME_WIDTH / 2,FRAME_HEIGHT / 2);
         velocity = new Vector2D(0,0);
-        direction = new Vector2D(1, 0.5*Math.PI);
+        direction = new Vector2D(0, -1);
     }
 
     public void update(){
-//        direction = direction.rotate(ctrl.action().turn * DT * STEER_RATE);
-        direction = direction.rotate(1);
-        System.out.println("direction " + direction);
-//        velocity = velocity.add(direction.mult(MAG_ACC * DT * ctrl.action().thrust));
-        velocity = velocity.add(0.01,0.01);
-
+        direction = direction.rotate(ctrl.action().turn * DT * STEER_RATE);
+        velocity = velocity.addScaled(direction,ctrl.action().thrust * MAG_ACC * DT);
+        velocity.mult(1-DRAG);
+        position.addScaled(velocity , DT).wrap(FRAME_WIDTH, FRAME_HEIGHT);
         System.out.println("velocity " + velocity);
-//        velocity.subtract(DRAG,DRAG);
-        position = position.add(velocity).wrap(FRAME_WIDTH, FRAME_HEIGHT);
+        System.out.println("direction " + direction);
         System.out.println("position " + position + "\n");
     }
 
     public void draw(Graphics2D g){
         g.setColor(COLOR);
-        g.fillOval((int)position.x - RADIUS , (int)position.y - RADIUS, 2 * RADIUS, 2 * RADIUS);
+//        g.fillOval((int)position.x - RADIUS , (int)position.y - RADIUS, 2 * RADIUS, 2 * RADIUS);
+        g.rotate(direction.angle(),position.x,position.y);
+        g.fillRect((int)position.x - 10, (int)(position.y - 3), 20, 6);
     }
 }

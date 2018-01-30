@@ -31,8 +31,11 @@ public final class Vector2D {
     }
 
     public boolean equals(Object o){
-
-        return false;
+        if (getClass() == o.getClass()){
+            Vector2D v = (Vector2D) o;
+            return this.x == v.x && this.y == v.y;
+        }
+         return false;
     }
 
     public String toString(){

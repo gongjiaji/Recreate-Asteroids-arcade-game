@@ -16,8 +16,9 @@ public class BasicGame {
         for (int i = 0; i < N_INITIAL_ASTEROIDS; i++) {
             asteroids.add(BasicAsteroid.makeRandomAsteroid());
         }
-        ship = new BasicShip(ctrl);
         ctrl = new BasicKeys();
+        ship = new BasicShip(ctrl);
+
     }
 
     public static void main(String[] args) throws Exception {
