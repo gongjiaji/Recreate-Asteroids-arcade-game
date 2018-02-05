@@ -7,18 +7,18 @@ import static game2.Constants.DELAY;
 
 public class Game {
     public static final int N_INITIAL_ASTEROIDS = 5;
-    public static List<Asteroid> asteroids;
     public static Ship ship;
     public static Keys ctrl;
+    public List<GameObject> objects;
 
     public Game() {
-        asteroids = new ArrayList<>();
+        objects = new ArrayList<>(); //store all game objects
         for (int i = 0; i < N_INITIAL_ASTEROIDS; i++) {
-            asteroids.add(Asteroid.makeRandomAsteroid());
+            objects.add(Asteroid.makeRandomAsteroid());
         }
         ctrl = new Keys();
         ship = new Ship(ctrl);
-
+        objects.add(ship);
     }
 
     public static void main(String[] args) throws Exception {
@@ -35,9 +35,18 @@ public class Game {
     }
 
     public void update(){
-        for (Asteroid a : asteroids){
-            a.update();
+        List<GameObject> alive = new ArrayList<>();
+        for (GameObject o : objects){
+            o.update();
+            if (!o.dead){
+                alive.add(o);
+            }
+            if (Ship.bullet == null){
+                alive.add(Ship.bullet);
+                Ship.bullet = null;
+            }
+            objects.clear();
+            objects.addAll(alive);
         }
-        ship.update();
     }
 }
