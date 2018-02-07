@@ -21,7 +21,6 @@ abstract public class GameObject {
     }
 
     public void hit(){
-
     }
 
     public void update(){
@@ -30,4 +29,16 @@ abstract public class GameObject {
     }
 
     public abstract void draw(Graphics2D g);
+
+    public boolean overlap(GameObject other){
+        return this.position.dist(other.position) < (this.radius + other.radius);
+    }
+
+    public void collisionHandling(GameObject other){
+        if (this.getClass() != other.getClass() && this.overlap(other)){
+//            this.hit();  // 2 times of collision detections
+            other.hit();
+            System.out.println(other.toString() + "\n");
+        }
+    }
 }

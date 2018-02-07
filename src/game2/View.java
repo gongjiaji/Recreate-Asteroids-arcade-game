@@ -18,8 +18,15 @@ public class View extends JComponent {
         Graphics2D g = (Graphics2D) g0;
         g.setColor(BG_COLOR);
         g.fillRect(0, 0, getWidth(), getHeight());
-        for (GameObject object : game.objects) {
-            object.draw(g);
+        g.setColor(Color.white);
+        g.drawString("Score: " + Game.score, 20, 20);
+        // rare situation
+        if (Game.life < 0) { Game.life = 0; }
+        g.drawString("Life: " + Game.life, 100, 20);
+        synchronized (Game.class) {
+            for (GameObject object : Game.objects) {
+                object.draw(g);
+            }
         }
     }
 

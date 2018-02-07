@@ -9,6 +9,7 @@ import static game2.Constants.DRAWING_SCALE;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.Date;
 
 public class Ship extends GameObject {
     public static final int RADIUS = 8;
@@ -16,10 +17,12 @@ public class Ship extends GameObject {
     public static final double MAG_ACC = 200; // acceleration when thrust is applied
     public static final double DRAG = 0.01;  // constant speed loss factor
     public static final Color COLOR = Color.cyan;
-    public Vector2D direction;// unit vector with angle. pointing out the way that the ship face to
+    public static Vector2D direction;// unit vector with angle. pointing out the way that the ship face to
     private Controller ctrl; //provides an Action object in each frame
     public boolean thrusting = false;
     public static Bullet bullet = null;
+    public static Date iniTime;
+
 
     public Ship(Controller ctrl) {
         super(new Vector2D(FRAME_WIDTH / 2, FRAME_HEIGHT / 2), new Vector2D(0, 0), RADIUS);
@@ -32,9 +35,13 @@ public class Ship extends GameObject {
         velocity = velocity.addScaled(direction, ctrl.action().thrust * MAG_ACC * DT);
         velocity.mult(1 - DRAG);
         super.update();
-        if (ctrl.action().shoot){
+        if (ctrl.action().shoot) {
             mkBullet();
             ctrl.action().shoot = false;
+        }
+        if (Game.life == 0) {
+            System.out.println("Game Over");
+            this.dead = true;
         }
     }
 
@@ -44,23 +51,34 @@ public class Ship extends GameObject {
         int[] XPTHRUST = {0, -4, 0, 4};
         int[] YPTHRUST = {-12, 4, 0, 4};
 
-        AffineTransform at = g.getTransform();
-        g.translate(position.x, position.y);
-        double rot = direction.angle() + Math.PI / 2;
-        g.rotate(rot);
-        g.scale(DRAWING_SCALE, DRAWING_SCALE);
-        g.setColor(COLOR);
-        g.fillPolygon(XP, YP, XP.length);
-        if (ctrl.action().thrust == 1) {
-            g.setColor(Color.red);
-            g.fillPolygon(XPTHRUST, YPTHRUST, XPTHRUST.length);
+        if (Game.life >0){
+            AffineTransform at = g.getTransform();
+            g.translate(position.x, position.y);
+            double rot = direction.angle() + Math.PI / 2;
+            g.rotate(rot);
+            g.scale(DRAWING_SCALE, DRAWING_SCALE);
+            g.setColor(COLOR);
+            g.fillPolygon(XP, YP, XP.length);
+            if (ctrl.action().thrust == 1) {
+                g.setColor(Color.red);
+                g.fillPolygon(XPTHRUST, YPTHRUST, XPTHRUST.length);
+            }
+            g.setTransform(at);
         }
-        g.setTransform(at);
     }
 
     private void mkBullet() {
         bullet = new Bullet(new Vector2D(position), new Vector2D(velocity));
-        bullet.position.add(5,5);// avoid immediate collision with ship
-        // todo bullet.velocity
+        bullet.position.addScaled(direction, 20);// avoid immediate collision with ship
+        bullet.velocity.addScaled(direction, 100);
+        iniTime = new Date();
+        bullet.time1 = iniTime.getTime();
+    }
+
+    public void hit() {
+//        System.out.println("call ship hit");
+        Game.life--;
+        position.set(FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
+        direction = new Vector2D(0, -1);
     }
 }
