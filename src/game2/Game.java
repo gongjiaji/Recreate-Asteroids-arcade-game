@@ -51,6 +51,10 @@ public class Game {
                 alive.add(Ship.bullet);
                 Ship.bullet = null;
             }
+            if (!Asteroid.splits.isEmpty()){
+                alive.addAll(Asteroid.splits);
+                Asteroid.splits.clear();
+            }
         }
         synchronized (Game.class) {
             objects.clear();
