@@ -13,8 +13,8 @@ import java.util.List;
 
 public class Asteroid extends GameObject {
     public static final int RADIUS = 20;
-    public static Asteroid split1 = null;
-    public static Asteroid split2 = null;
+    public static final int RADIUS1 = 15;
+    public static final int RADIUS2 = 10;
     public static List<Asteroid> splits = new ArrayList<>();
     public static final double MAX_SPEED = 100;
 
@@ -33,31 +33,33 @@ public class Asteroid extends GameObject {
     }
 
     public void draw(Graphics2D g) {
-        if (this.radius == 20){
+        if (this.radius == RADIUS) {
             g.setColor(Color.red);
             g.fillOval((int) position.x - RADIUS, (int) position.y - RADIUS, 2 * RADIUS, 2 * RADIUS);
-        }else if (this.radius == 10){
+        } else if (this.radius == RADIUS1) {
             g.setColor(Color.blue);
-            g.fillOval((int) (position.x - this.radius), (int) (position.y - this.radius), (int)(2 * this.radius), (int)(2 * this.radius));
-        }else if (this.radius == 5){
+            g.fillOval((int) (position.x - this.radius), (int) (position.y - this.radius), (int) (2 * this.radius), (int) (2 * this.radius));
+        } else if (this.radius == RADIUS2) {
             g.setColor(Color.yellow);
-            g.fillOval((int) (position.x - this.radius), (int) (position.y - this.radius), (int)(2 * this.radius), (int)(2 * this.radius));
+            g.fillOval((int) (position.x - this.radius), (int) (position.y - this.radius), (int) (2 * this.radius), (int) (2 * this.radius));
         }
     }
 
     public void hit() {
         this.dead = true;
-        System.out.println(this.toString()+"."+this.velocity.angle());
-        split1 = new Asteroid(this.position, this.velocity.rotate());
-        split1.radius = 10;
-        split2 = new Asteroid(this.position, this.velocity.rotate(135));
-
-        split2.radius = 5;
-        splits.add(split1);
-        splits.add(split2);
-
+        System.out.println(this.toString());
+        if (this.radius > RADIUS2) {
+            split();
+        }
         Game.addScore();
     }
 
-
+    public void split() {
+        Asteroid split1 = new Asteroid(new Vector2D(this.position), new Vector2D(this.velocity).rotate(random() * -90));
+        Asteroid split2 = new Asteroid(new Vector2D(this.position), new Vector2D(this.velocity).rotate(random() * -90));
+        split1.radius = this.radius - 5;
+        split2.radius = this.radius - 5;
+        splits.add(split1);
+        splits.add(split2);
+    }
 }

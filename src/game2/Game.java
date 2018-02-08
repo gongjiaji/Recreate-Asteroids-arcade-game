@@ -1,5 +1,6 @@
 package game2;
 
+import com.sun.tools.internal.ws.wsdl.document.soap.SOAPUse;
 import utilities.JEasyFrame;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class Game {
                 alive.add(Ship.bullet);
                 Ship.bullet = null;
             }
-            if (!Asteroid.splits.isEmpty()){
+            if (!Asteroid.splits.isEmpty()) {
                 alive.addAll(Asteroid.splits);
                 Asteroid.splits.clear();
             }
@@ -69,9 +70,9 @@ public class Game {
     }
 
     public static void addScore() {
-        score ++;
-        bonus ++; // additional life will be given for every x scores
-        if (bonus > 9){ // 10 scores +1 life
+        score++;
+        bonus++; // additional life will be given for every x scores
+        if (bonus > 9) { // 10 scores +1 life
             life++;
             bonus = 0;
         }
