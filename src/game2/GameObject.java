@@ -36,9 +36,7 @@ abstract public class GameObject {
 
     public void collisionHandling(GameObject other){
         if (this.getClass() != other.getClass() && this.overlap(other)){
-//            this.hit();  // 2 times of collision detections
             other.hit();
-            System.out.println(other.toString() + "\n");
         }
     }
 }

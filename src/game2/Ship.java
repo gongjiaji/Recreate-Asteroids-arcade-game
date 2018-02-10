@@ -6,6 +6,7 @@ import static game2.Constants.FRAME_HEIGHT;
 import static game2.Constants.FRAME_WIDTH;
 import static game2.Constants.DT;
 import static game2.Constants.DRAWING_SCALE;
+import static java.lang.Math.random;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -40,8 +41,8 @@ public class Ship extends GameObject {
             ctrl.action().shoot = false;
         }
         if (Game.life == 0) {
-            System.out.println("Game Over");
             this.dead = true;
+            Game.over();
         }
     }
 
@@ -51,7 +52,7 @@ public class Ship extends GameObject {
         int[] XPTHRUST = {0, -4, 0, 4};
         int[] YPTHRUST = {-12, 4, 0, 4};
 
-        if (Game.life >0){
+        if (Game.life > 0) {
             AffineTransform at = g.getTransform();
             g.translate(position.x, position.y);
             double rot = direction.angle() + Math.PI / 2;
@@ -76,9 +77,13 @@ public class Ship extends GameObject {
     }
 
     public void hit() {
-//        System.out.println("call ship hit");
         Game.life--;
         position.set(FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
         direction = new Vector2D(0, -1);
+    }
+
+    public void teleport() {
+        position = new Vector2D(random() * FRAME_HEIGHT, random() * FRAME_WIDTH);
+        ctrl.action().teleport = false;
     }
 }

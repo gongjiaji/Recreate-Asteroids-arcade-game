@@ -4,6 +4,7 @@ import utilities.Vector2D;
 
 import static game2.Constants.FRAME_HEIGHT;
 import static game2.Constants.FRAME_WIDTH;
+import static java.lang.Math.abs;
 import static java.lang.Math.random;
 
 import java.awt.Color;
@@ -24,8 +25,14 @@ public class Asteroid extends GameObject {
     }
 
     public static Asteroid makeRandomAsteroid() {
-        return new Asteroid(new Vector2D(random() * FRAME_HEIGHT, random() * FRAME_WIDTH),
-                new Vector2D(random() * MAX_SPEED, random() * MAX_SPEED));
+        Vector2D p = new Vector2D(random() * FRAME_HEIGHT, random() * FRAME_WIDTH);
+        Vector2D v = new Vector2D(random() * MAX_SPEED, random() * MAX_SPEED);
+
+        if (p.dist(new Vector2D(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT)) < 50) {
+            System.out.println(p.toString());
+            p = new Vector2D(random() * FRAME_HEIGHT, random() * FRAME_WIDTH);
+        }
+        return new Asteroid(p, v);
     }
 
     public void update() {
@@ -47,7 +54,6 @@ public class Asteroid extends GameObject {
 
     public void hit() {
         this.dead = true;
-        System.out.println(this.toString());
         if (this.radius > RADIUS2) {
             split();
         }

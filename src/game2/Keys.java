@@ -1,5 +1,7 @@
 package game2;
 
+import com.sun.org.apache.bcel.internal.generic.FADD;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -9,6 +11,8 @@ public class Keys extends KeyAdapter implements Controller {
     public Keys() {
         action = new Action();
     }
+
+
 
     @Override
     public Action action() {
@@ -31,6 +35,12 @@ public class Keys extends KeyAdapter implements Controller {
             case KeyEvent.VK_SPACE:
                 action.shoot = true;
                 break;
+            case KeyEvent.VK_R:
+                Game.restart();
+                break;
+            case KeyEvent.VK_DOWN:
+                action.teleport = true;
+                break;
         }
     }
 
@@ -49,6 +59,9 @@ public class Keys extends KeyAdapter implements Controller {
                 break;
             case KeyEvent.VK_SPACE:
                 action.shoot = false;
+                break;
+            case KeyEvent.VK_DOWN:
+                action.teleport = false;
                 break;
         }
     }

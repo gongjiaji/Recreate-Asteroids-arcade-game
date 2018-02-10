@@ -10,6 +10,7 @@ public class Bullet extends GameObject {
     public Date curTime;
     public long time1; // ini
     public long time2; // cur
+    public static int FLYINGTIME = 5000; // bullet flying time
 
     public Bullet(Vector2D position, Vector2D velocity) {
         super(position, velocity, RADIUS);
@@ -28,7 +29,7 @@ public class Bullet extends GameObject {
         for (GameObject b : Game.objects){
             if (b instanceof Bullet){
                 ((Bullet) b).time2 = curTime.getTime();
-                if (((Bullet) b).time2 - ((Bullet) b).time1 > 5000){
+                if (((Bullet) b).time2 - ((Bullet) b).time1 > FLYINGTIME){
                     b.dead = true;
                 }
             }
