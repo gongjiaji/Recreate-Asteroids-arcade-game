@@ -1,5 +1,6 @@
 package game2;
 
+import utilities.SoundManager;
 import utilities.Vector2D;
 
 import static game2.Constants.FRAME_HEIGHT;
@@ -74,9 +75,11 @@ public class Ship extends GameObject {
         bullet.velocity.addScaled(direction, 100);
         iniTime = new Date();
         bullet.time1 = iniTime.getTime();
+        SoundManager.fire();
     }
 
     public void hit() {
+        SoundManager.hitship();
         Game.life--;
         position.set(FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
         direction = new Vector2D(0, -1);

@@ -1,10 +1,10 @@
 package game2;
 
+import utilities.SoundManager;
 import utilities.Vector2D;
 
 import static game2.Constants.FRAME_HEIGHT;
 import static game2.Constants.FRAME_WIDTH;
-import static java.lang.Math.abs;
 import static java.lang.Math.random;
 
 import java.awt.Color;
@@ -53,6 +53,19 @@ public class Asteroid extends GameObject {
     }
 
     public void hit() {
+        // sound
+        switch ((int) this.radius) {
+            case RADIUS:
+                SoundManager.play(SoundManager.bangLarge);
+                break;
+            case RADIUS1:
+                SoundManager.play(SoundManager.bangMedium);
+                break;
+            case RADIUS2:
+                SoundManager.play(SoundManager.bangSmall);
+                break;
+        }
+
         this.dead = true;
         if (this.radius > RADIUS2) {
             split();

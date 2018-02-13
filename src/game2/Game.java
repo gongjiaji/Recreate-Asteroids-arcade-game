@@ -1,6 +1,7 @@
 package game2;
 
 import utilities.JEasyFrame;
+import utilities.SoundManager;
 import utilities.Vector2D;
 
 import java.util.ArrayList;
@@ -93,6 +94,7 @@ public class Game {
         bonus++; // additional life will be given for every x scores
         if (bonus > award_threshold) { // 10 scores +1 life
             life++;
+            SoundManager.extraShip();
             bonus = 0;
         }
     }

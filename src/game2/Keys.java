@@ -1,6 +1,7 @@
 package game2;
 
 import com.sun.org.apache.bcel.internal.generic.FADD;
+import utilities.SoundManager;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -24,6 +25,7 @@ public class Keys extends KeyAdapter implements Controller {
         int key = e.getKeyCode();
         switch (key){
             case KeyEvent.VK_UP:
+                SoundManager.startThrust();
                 action.thrust = 1;
                 break;
             case KeyEvent.VK_LEFT:
@@ -50,6 +52,7 @@ public class Keys extends KeyAdapter implements Controller {
         switch (key){
             case KeyEvent.VK_UP:
                 action.thrust = 0;
+                SoundManager.stopThrust();
                 break;
             case KeyEvent.VK_LEFT:
                 action.turn = 0;
