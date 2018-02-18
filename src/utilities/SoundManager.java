@@ -31,6 +31,7 @@ public class SoundManager {
     public final static Clip saucerBig = getClip("saucerBig");
     public final static Clip saucerSmall = getClip("saucerSmall");
     public final static Clip thrust = getClip("thrust");
+    public final static Clip bgm = getClip("bgm"); // © Jackpot - The Fat Rat
 
     public final static Clip[] clips = {bangLarge, bangMedium, bangSmall, beat1, beat2,
             extraShip, fire, saucerBig, saucerSmall, thrust};
@@ -95,16 +96,6 @@ public class SoundManager {
 
     // Custom methods playing a particular sound
     // Please add your own methods below
-
-    public static void asteroids_1() {
-        play(bangLarge);
-    }
-    public static void asteroids_2() {
-        play(bangMedium);
-    }
-    public static void asteroids_3() {
-        play(bangSmall);
-    }
 
     public static void extraShip() {
         play(extraShip);

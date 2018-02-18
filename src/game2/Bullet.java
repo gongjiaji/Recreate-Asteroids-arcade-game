@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.Date;
 
 public class Bullet extends GameObject {
-    public static final int RADIUS = 2;
+    public static final int RADIUS = 3;
     public Date curTime;
     public long time1; // ini
     public long time2; // cur
@@ -18,7 +18,8 @@ public class Bullet extends GameObject {
 
     @Override
     public void draw(Graphics2D g) {
-        g.setColor(Color.GREEN);
+//        g.setColor(Color.GREEN);
+        g.setColor(new Color((int)(255 * Math.random()), (int)(255 * Math.random()),(int)(255 * Math.random())));
         g.fillOval((int)position.x - RADIUS , (int)position.y - RADIUS, 2 * RADIUS, 2 * RADIUS);
     }
 

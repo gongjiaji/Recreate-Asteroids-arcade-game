@@ -63,6 +63,7 @@ public class Ship extends GameObject {
             g.fillPolygon(XP, YP, XP.length);
             if (ctrl.action().thrust == 1) {
                 g.setColor(Color.red);
+                g.setColor(new Color((int)(255 * Math.random()), (int)(255 * Math.random()),(int)(255 * Math.random())));
                 g.fillPolygon(XPTHRUST, YPTHRUST, XPTHRUST.length);
             }
             g.setTransform(at);

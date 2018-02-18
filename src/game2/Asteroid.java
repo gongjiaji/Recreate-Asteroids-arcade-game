@@ -7,17 +7,20 @@ import static game2.Constants.FRAME_HEIGHT;
 import static game2.Constants.FRAME_WIDTH;
 import static java.lang.Math.random;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Asteroid extends GameObject {
-    public static final int RADIUS = 20;
-    public static final int RADIUS1 = 15;
-    public static final int RADIUS2 = 10;
+    public static final int RADIUS = 26;
+    public static final int RADIUS1 = 20;
+    public static final int RADIUS2 = 14;
     public static List<Asteroid> splits = new ArrayList<>();
     public static final double MAX_SPEED = 100;
+    Image as = Constants.ASTEROID1;  //28 x 24 px
+    AffineTransform asTransf;
+    public static int angle = 0;
 
 
     public Asteroid(Vector2D position, Vector2D velocity) {
@@ -40,16 +43,26 @@ public class Asteroid extends GameObject {
     }
 
     public void draw(Graphics2D g) {
-        if (this.radius == RADIUS) {
-            g.setColor(Color.red);
-            g.fillOval((int) position.x - RADIUS, (int) position.y - RADIUS, 2 * RADIUS, 2 * RADIUS);
-        } else if (this.radius == RADIUS1) {
-            g.setColor(Color.blue);
-            g.fillOval((int) (position.x - this.radius), (int) (position.y - this.radius), (int) (2 * this.radius), (int) (2 * this.radius));
-        } else if (this.radius == RADIUS2) {
-            g.setColor(Color.yellow);
-            g.fillOval((int) (position.x - this.radius), (int) (position.y - this.radius), (int) (2 * this.radius), (int) (2 * this.radius));
+
+        asTransf = new AffineTransform();
+        asTransf.translate(-as.getWidth(null) / 2, -as.getHeight(null) / 2);
+        asTransf.translate(position.x, position.y);
+        if (radius == RADIUS) {
+            asTransf.rotate(angle += 0.01);
+            asTransf.scale(2, 2);
+        } else if (radius == RADIUS1) {
+            asTransf.rotate(angle += 0.01);
+
+            asTransf.scale(1.5, 1.5);
+        } else if (radius == RADIUS2) {
+            asTransf.rotate(angle += 0.01);
+
+            asTransf.scale(1, 1);
         }
+//        asTransf.translate(position.x - as.getWidth(null) / 2, position.y - as.getHeight(null)/2);
+
+        g.drawImage(as, asTransf, null);
+
     }
 
     public void hit() {
@@ -76,8 +89,8 @@ public class Asteroid extends GameObject {
     public void split() {
         Asteroid split1 = new Asteroid(new Vector2D(this.position), new Vector2D(this.velocity).rotate(random() * -90));
         Asteroid split2 = new Asteroid(new Vector2D(this.position), new Vector2D(this.velocity).rotate(random() * -90));
-        split1.radius = this.radius - 5;
-        split2.radius = this.radius - 5;
+        split1.radius = this.radius - 6;
+        split2.radius = this.radius - 6;
         splits.add(split1);
         splits.add(split2);
     }

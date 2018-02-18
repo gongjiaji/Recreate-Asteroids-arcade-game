@@ -40,6 +40,8 @@ public class Game {
 
         new JEasyFrame(view, "Basic game").addKeyListener(ctrl);
 
+        SoundManager.play(SoundManager.bgm);
+
         while (true) {
             game.update();
             view.repaint();
