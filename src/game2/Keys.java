@@ -1,6 +1,5 @@
 package game2;
 
-import com.sun.org.apache.bcel.internal.generic.FADD;
 import utilities.SoundManager;
 
 import java.awt.event.KeyAdapter;
@@ -9,11 +8,9 @@ import java.awt.event.KeyEvent;
 public class Keys extends KeyAdapter implements Controller {
     Action action;
 
-    public Keys() {
+    Keys() {
         action = new Action();
     }
-
-
 
     @Override
     public Action action() {
@@ -23,10 +20,11 @@ public class Keys extends KeyAdapter implements Controller {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        switch (key){
+        switch (key) {
             case KeyEvent.VK_UP:
                 SoundManager.startThrust();
                 action.thrust = 1;
+                PlayerShip.thrusting = true;
                 break;
             case KeyEvent.VK_LEFT:
                 action.turn = -1;
@@ -49,9 +47,10 @@ public class Keys extends KeyAdapter implements Controller {
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-        switch (key){
+        switch (key) {
             case KeyEvent.VK_UP:
                 action.thrust = 0;
+                PlayerShip.thrusting = false;
                 SoundManager.stopThrust();
                 break;
             case KeyEvent.VK_LEFT:

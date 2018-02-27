@@ -14,29 +14,37 @@ abstract public class GameObject {
     public boolean dead;
     public double radius;
 
-    public GameObject(Vector2D position, Vector2D velocity, double radius){
+    GameObject(Vector2D position, Vector2D velocity, double radius) {
         this.position = position;
         this.velocity = velocity;
         this.radius = radius;
     }
 
-    public void hit(){
+    public void hit() {
     }
 
-    public void update(){
+    public void update() {
         position.addScaled(velocity, DT);
         position.wrap(FRAME_WIDTH, FRAME_HEIGHT);
     }
 
     public abstract void draw(Graphics2D g);
 
-    public boolean overlap(GameObject other){
+    public abstract String toString();
+
+    private boolean overlap(GameObject other) {
         return this.position.dist(other.position) < (this.radius + other.radius);
     }
 
-    public void collisionHandling(GameObject other){
-        if (this.getClass() != other.getClass() && this.overlap(other)){
-            other.hit();
+    public void collisionHandling(GameObject other) {
+        if (this.getClass() != other.getClass() && this.overlap(other)) {
+            if (this.toString().equals("bullet_s") && other.toString().equals("asteroid") ||
+                    this.toString().equals("Saucer") && other.toString().equals("asteroid") ||
+                    this.toString().equals("asteroid") && other.toString().equals("Saucer")
+                    ) {
+            } else {
+                other.hit();
+            }
         }
     }
 }

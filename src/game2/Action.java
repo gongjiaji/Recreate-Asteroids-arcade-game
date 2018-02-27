@@ -5,4 +5,7 @@ public class Action {
     public int turn; // -1 left 0 no 1 right
     public boolean shoot;
     public boolean teleport;
+
+    public int turn_s;
+    public boolean shoot_s;
 }

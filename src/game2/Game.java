@@ -12,14 +12,14 @@ import static game2.Constants.FRAME_HEIGHT;
 import static game2.Constants.FRAME_WIDTH;
 
 public class Game {
-    public static int N_INITIAL_ASTEROIDS = 5;
-    public static Ship ship;
-    public static Keys ctrl;
+    private static int N_INITIAL_ASTEROIDS = 5;
+    private static PlayerShip playerShip;
+    private static Keys ctrl;
     public static List<GameObject> objects;
     public static int score = 0;
     public static int life = 3;
-    public static int bonus = 0;
-    public static int award_threshold = 9;
+    private static int bonus = 0;
+    private static int award_threshold = 9;
     public static int level = 1;
     public static boolean over = false; // 0 playing 1 dead 2 restart
 
@@ -30,8 +30,10 @@ public class Game {
             objects.add(Asteroid.makeRandomAsteroid());
         }
         ctrl = new Keys();
-        ship = new Ship(ctrl);
-        objects.add(ship);
+        playerShip = new PlayerShip(ctrl);
+        Saucer saucer = new Saucer(new RotateNShoot());
+        objects.add(playerShip);
+        objects.add(saucer);
     }
 
     public static void main(String[] args) throws Exception {
@@ -57,10 +59,16 @@ public class Game {
             if (!o.dead) {
                 alive.add(o);
             }
-            if (Ship.bullet != null) {
-                alive.add(Ship.bullet);
-                Ship.bullet = null;
+            if (PlayerShip.bullet != null) {
+                alive.add(PlayerShip.bullet);
+                PlayerShip.bullet = null;
             }
+
+            if (Saucer.bullet != null) {
+                alive.add(Saucer.bullet);
+                Saucer.bullet = null;
+            }
+
             if (!Asteroid.splits.isEmpty()) {
                 alive.addAll(Asteroid.splits);
                 Asteroid.splits.clear();
@@ -86,8 +94,8 @@ public class Game {
             levelup();
         }
 
-        if (ctrl.action.teleport){
-            ship.teleport();
+        if (ctrl.action.teleport) {
+            playerShip.teleport();
         }
     }
 
@@ -101,7 +109,7 @@ public class Game {
         }
     }
 
-    public void levelup() {
+    private void levelup() {
         objects.clear();
         level++;
         N_INITIAL_ASTEROIDS += 2;
@@ -110,7 +118,7 @@ public class Game {
         for (int i = 0; i < N_INITIAL_ASTEROIDS; i++) {
             objects.add(Asteroid.makeRandomAsteroid());
         }
-        objects.add(ship);
+        objects.add(playerShip);
     }
 
     // end of game
@@ -130,15 +138,15 @@ public class Game {
         award_threshold = 9;
         Bullet.FLYINGTIME = 5000;
 
-        ship.position = new Vector2D(FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
-        ship.velocity = new Vector2D(0, 0);
-        Ship.direction = new Vector2D(0, -1);
+        playerShip.position = new Vector2D(FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
+        playerShip.velocity = new Vector2D(0, 0);
+        playerShip.direction = new Vector2D(0, -1);
 
         for (int i = 0; i < N_INITIAL_ASTEROIDS; i++) {
             objects.add(Asteroid.makeRandomAsteroid());
         }
-        ship.dead = false;
-        objects.add(ship);
+        playerShip.dead = false;
+        objects.add(playerShip);
         over = false;
     }
 

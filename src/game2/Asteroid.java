@@ -13,17 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Asteroid extends GameObject {
-    public static final int RADIUS = 26;
-    public static final int RADIUS1 = 20;
-    public static final int RADIUS2 = 14;
+    private static final int RADIUS = 26;
+    private static final int RADIUS1 = 20;
+    private static final int RADIUS2 = 14;
     public static List<Asteroid> splits = new ArrayList<>();
-    public static final double MAX_SPEED = 100;
-    Image as = Constants.ASTEROID1;  //28 x 24 px
-    AffineTransform asTransf;
-    public static int angle = 0;
+    private static final double MAX_SPEED = 100;
+    private Image as = Constants.ASTEROID1;  //28 x 24 px
+    private static int angle = 0;
 
 
-    public Asteroid(Vector2D position, Vector2D velocity) {
+    private Asteroid(Vector2D position, Vector2D velocity) {
         super(position, velocity, RADIUS);
     }
 
@@ -43,8 +42,7 @@ public class Asteroid extends GameObject {
     }
 
     public void draw(Graphics2D g) {
-
-        asTransf = new AffineTransform();
+        AffineTransform asTransf = new AffineTransform();
         asTransf.translate(-as.getWidth(null) / 2, -as.getHeight(null) / 2);
         asTransf.translate(position.x, position.y);
         if (radius == RADIUS) {
@@ -59,10 +57,7 @@ public class Asteroid extends GameObject {
 
             asTransf.scale(1, 1);
         }
-//        asTransf.translate(position.x - as.getWidth(null) / 2, position.y - as.getHeight(null)/2);
-
         g.drawImage(as, asTransf, null);
-
     }
 
     public void hit() {
@@ -86,12 +81,17 @@ public class Asteroid extends GameObject {
         Game.addScore();
     }
 
-    public void split() {
+    private void split() {
         Asteroid split1 = new Asteroid(new Vector2D(this.position), new Vector2D(this.velocity).rotate(random() * -90));
         Asteroid split2 = new Asteroid(new Vector2D(this.position), new Vector2D(this.velocity).rotate(random() * -90));
         split1.radius = this.radius - 6;
         split2.radius = this.radius - 6;
         splits.add(split1);
         splits.add(split2);
+    }
+
+    @Override
+    public String toString() {
+        return "asteroid";
     }
 }

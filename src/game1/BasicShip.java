@@ -15,7 +15,7 @@ public class BasicShip {
 
     public Vector2D position; // on frame
     public Vector2D velocity; // per sec
-    public Vector2D direction;// unit vector with angle. pointing out the way that the ship face to
+    public Vector2D direction;// unit vector with angle. pointing out the way that the playerShip face to
 
     private BasicController ctrl; //provides an Action object in each frame
 

@@ -7,10 +7,13 @@ import java.util.Date;
 
 public class Bullet extends GameObject {
     public static final int RADIUS = 3;
+    public static final int RADIUS_S = 1;
     public Date curTime;
     public long time1; // ini
     public long time2; // cur
     public static int FLYINGTIME = 5000; // bullet flying time
+    public String tag;
+
 
     public Bullet(Vector2D position, Vector2D velocity) {
         super(position, velocity, RADIUS);
@@ -18,9 +21,14 @@ public class Bullet extends GameObject {
 
     @Override
     public void draw(Graphics2D g) {
-//        g.setColor(Color.GREEN);
-        g.setColor(new Color((int)(255 * Math.random()), (int)(255 * Math.random()),(int)(255 * Math.random())));
-        g.fillOval((int)position.x - RADIUS , (int)position.y - RADIUS, 2 * RADIUS, 2 * RADIUS);
+        if (tag.equals("s")){
+            g.setColor(Color.GREEN);
+            g.fillOval((int)position.x - RADIUS_S , (int)position.y - RADIUS_S, 2 * RADIUS_S, 2 * RADIUS_S);
+        }
+        if (tag.equals("p")){
+            g.setColor(new Color((int)(255 * Math.random()), (int)(255 * Math.random()),(int)(255 * Math.random())));
+            g.fillOval((int)position.x - RADIUS , (int)position.y - RADIUS, 2 * RADIUS, 2 * RADIUS);
+        }
     }
 
     public void update(){
@@ -38,7 +46,18 @@ public class Bullet extends GameObject {
     }
 
     public void hit(){
-//        System.out.println("call bul hit");
         this.dead = true;
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        if (tag.equals("p")){
+            s = "bullet_p";
+        }
+        if (tag.equals("s")){
+            s = "bullet_s";
+        }
+        return s;
     }
 }
