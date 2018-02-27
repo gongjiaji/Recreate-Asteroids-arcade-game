@@ -12,7 +12,7 @@ import static game2.Constants.FRAME_HEIGHT;
 import static game2.Constants.FRAME_WIDTH;
 
 public class Game {
-    private static int N_INITIAL_ASTEROIDS = 5;
+    private static int N_INITIAL_ASTEROIDS = 1;
     private static PlayerShip playerShip;
     private static Keys ctrl;
     public static List<GameObject> objects;
@@ -22,7 +22,7 @@ public class Game {
     private static int award_threshold = 9;
     public static int level = 1;
     public static boolean over = false; // 0 playing 1 dead 2 restart
-
+    public Saucer saucer = null;
 
     public Game() {
         objects = new ArrayList<>(); //store all game objects
@@ -31,9 +31,9 @@ public class Game {
         }
         ctrl = new Keys();
         playerShip = new PlayerShip(ctrl);
-        Saucer saucer = new Saucer(new RotateNShoot());
+//        Saucer saucer = new Saucer(new RotateNShoot());
         objects.add(playerShip);
-        objects.add(saucer);
+//        objects.add(saucer);
     }
 
     public static void main(String[] args) throws Exception {
@@ -73,6 +73,7 @@ public class Game {
                 alive.addAll(Asteroid.splits);
                 Asteroid.splits.clear();
             }
+
         }
         synchronized (Game.class) {
             objects.clear();
@@ -88,10 +89,18 @@ public class Game {
         for (GameObject a : alive) {
             if (a.getClass() == Asteroid.class) {
                 i++;
+            }else if (a.getClass() == Saucer.class){
+                i = 1000;
             }
         }
         if (i == 0 && !over) {
-            levelup();
+            if (saucer == null){
+                saucer = new Saucer(new RotateNShoot());
+                objects.add(saucer);
+            }
+            else if (saucer.dead){
+                levelup();
+            }
         }
 
         if (ctrl.action.teleport) {
@@ -149,5 +158,4 @@ public class Game {
         objects.add(playerShip);
         over = false;
     }
-
 }

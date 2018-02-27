@@ -5,7 +5,7 @@ public class RotateNShoot implements Controller {
 
     @Override
     public Action action() {
-        action.shoot_s = true;
+        action.shoot_s = false;
         action.turn_s = 0;
         return action;
     }

@@ -14,12 +14,14 @@ public class Saucer extends Ship {
     private Controller ctrl; //provides an Action object in each frame
     public static Bullet bullet = null;
     private Image sau = Constants.SAUCER1;  //200 x 200 px
+    private int HP = 20;
 
     Saucer(Controller ctrl) {
         super(new Vector2D(FRAME_WIDTH / 2, 50), new Vector2D(0, 0), RADIUS);
         this.ctrl = ctrl;
         direction = new Vector2D(0, 1);
         dead = false;
+        System.out.println("new saucer created");
     }
 
     public void update() {
@@ -58,6 +60,12 @@ public class Saucer extends Ship {
 
     public void hit() {
         SoundManager.hitship();
+        System.out.println("hit");
+        HP--;
+        if (HP == 0){
+            dead = true;
+            System.out.println("S Dead");
+        }
     }
 
     @Override
