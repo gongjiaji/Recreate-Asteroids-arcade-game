@@ -58,7 +58,7 @@ public class PlayerShip extends Ship {
     public Bullet mkBullet() {
         bullet = new Bullet(new Vector2D(position), new Vector2D(velocity));
         bullet.tag = "p";
-        bullet.position.addScaled(direction, 30);// avoid immediate collision with playerShip
+        bullet.position.addScaled(direction, 35);// avoid immediate collision with playerShip
         bullet.velocity.addScaled(direction, 100);
         Date iniTime = new Date();
         bullet.time1 = iniTime.getTime();

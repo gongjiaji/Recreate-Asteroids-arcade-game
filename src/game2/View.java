@@ -40,8 +40,6 @@ public class View extends JComponent {
         } else {
             Graphics2D g = (Graphics2D) g0;
             g.drawImage(im, bgTransf, null);
-//            g.setColor(BG_COLOR);
-//            g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(Color.white);
             g.drawString("Score: " + Game.score, 20, 20);
             // rare situation
@@ -50,6 +48,13 @@ public class View extends JComponent {
             }
             g.drawString("Life: " + Game.life, 100, 20);
             g.drawString("Level: " + Game.level, 180, 20);
+
+            if (Game.boosFight){
+                g.setColor(Color.WHITE);
+                g.drawRect(100, 700, 800, 20);
+                g.setColor(Color.red);
+                g.fillRect(100, 700, Saucer.HP * 40, 20);
+            }
 
             synchronized (Game.class) {
                 for (GameObject object : Game.objects) {

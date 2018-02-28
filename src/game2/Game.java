@@ -22,7 +22,11 @@ public class Game {
     private static int award_threshold = 9;
     public static int level = 1;
     public static boolean over = false; // 0 playing 1 dead 2 restart
-    public Saucer saucer = null;
+    private Saucer saucer_1 = null;
+    private Saucer saucer_2 = null;
+    private Saucer saucer_3 = null;
+    private Saucer saucer_4 = null;
+    public static boolean boosFight = false;
 
     public Game() {
         objects = new ArrayList<>(); //store all game objects
@@ -31,9 +35,7 @@ public class Game {
         }
         ctrl = new Keys();
         playerShip = new PlayerShip(ctrl);
-//        Saucer saucer = new Saucer(new RotateNShoot());
         objects.add(playerShip);
-//        objects.add(saucer);
     }
 
     public static void main(String[] args) throws Exception {
@@ -89,17 +91,39 @@ public class Game {
         for (GameObject a : alive) {
             if (a.getClass() == Asteroid.class) {
                 i++;
-            }else if (a.getClass() == Saucer.class){
+            } else if (a.getClass() == Saucer.class) {
                 i = 1000;
             }
         }
         if (i == 0 && !over) {
-            if (saucer == null){
-                saucer = new Saucer(new RotateNShoot());
-                objects.add(saucer);
-            }
-            else if (saucer.dead){
-                levelup();
+            if (saucer_1 == null && saucer_2 == null && saucer_3 == null && saucer_4 == null) {
+                switch (level) {
+                    case 1:
+                        saucer_1 = new Saucer(new RotateNShoot());
+                        objects.add(saucer_1);
+                        Game.boosFight = true;
+                        break;
+                    case 2:
+                        saucer_2 = new Saucer(new RotateNShoot());
+                        objects.add(saucer_2);
+                        Game.boosFight = true;
+                        break;
+                    case 3:
+                        saucer_3 = new Saucer(new RotateNShoot());
+                        objects.add(saucer_3);
+                        Game.boosFight = true;
+                        break;
+                    case 4:
+                        saucer_4 = new Saucer(new RotateNShoot());
+                        objects.add(saucer_4);
+                        Game.boosFight = true;
+                        break;
+                }
+            } else {
+                if (Saucer.nextLevel) {
+                    levelup();
+                    Saucer.nextLevel = false;
+                }
             }
         }
 
