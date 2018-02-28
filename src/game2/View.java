@@ -24,7 +24,7 @@ public class View extends JComponent {
 
     @Override
     public void paintComponent(Graphics g0) {
-        if (Game.over) {
+        if (Game.over) { // game over
             Graphics2D g = (Graphics2D) g0;
             g.setColor(BG_COLOR);
             g.fillRect(0, 0, getWidth(), getHeight());
@@ -37,7 +37,7 @@ public class View extends JComponent {
             g.setColor(Color.white);
             g.setFont(new Font("Monaca", Font.ITALIC, 40));
             g.drawString("Press 'R' to restart", getWidth() / 2 - 180, getHeight() / 2 + 100);
-        } else {
+        } else { // alive
             Graphics2D g = (Graphics2D) g0;
             g.drawImage(im, bgTransf, null);
             g.setColor(Color.white);
@@ -49,11 +49,26 @@ public class View extends JComponent {
             g.drawString("Life: " + Game.life, 100, 20);
             g.drawString("Level: " + Game.level, 180, 20);
 
-            if (Game.boosFight){
+            if (Game.bossFight) { // DRAW HP BAR
                 g.setColor(Color.WHITE);
+                g.drawString("Boss Life: " + Saucer.HP, 260, 20);
                 g.drawRect(100, 700, 800, 20);
                 g.setColor(Color.red);
-                g.fillRect(100, 700, Saucer.HP * 40, 20);
+                switch (Game.level) {
+                    case 1:
+                        g.fillRect(100, 700, Saucer.HP * 40, 20);
+                        break;
+                    case 2:
+                        g.fillRect(100, 700, Saucer.HP * 20, 20);
+                        break;
+                    case 3:
+                        g.fillRect(100, 700, Saucer.HP * 16, 20);
+                        break;
+                    case 4:
+                        g.fillRect(100, 700, Saucer.HP * 10, 20);
+                        break;
+
+                }
             }
 
             synchronized (Game.class) {

@@ -17,7 +17,7 @@ public class Saucer extends Ship {
     private Image sau2 = Constants.SAUCER2;  //200 x 200 px
     private Image sau3 = Constants.SAUCER3;  //200 x 200 px
     private Image sau4 = Constants.SAUCER4;  //200 x 200 px
-    public static int HP = 20;
+    public static int HP;
     public static boolean nextLevel = false;
 
     Saucer(Controller ctrl) {
@@ -55,7 +55,20 @@ public class Saucer extends Ship {
         AffineTransform sauTransf = new AffineTransform();
         sauTransf.translate(-sau.getWidth(null) / 2, -sau.getHeight(null) / 2);
         sauTransf.translate(position.x, position.y);
-        g.drawImage(sau, sauTransf, null);
+        switch (Game.level) {
+            case 1:
+                g.drawImage(sau, sauTransf, null);
+                break;
+            case 2:
+                g.drawImage(sau2, sauTransf, null);
+                break;
+            case 3:
+                g.drawImage(sau3, sauTransf, null);
+                break;
+            case 4:
+                g.drawImage(sau4, sauTransf, null);
+                break;
+        }
     }
 
     @Override
@@ -65,12 +78,11 @@ public class Saucer extends Ship {
 
     public void hit() {
         SoundManager.hitship();
-        System.out.println("hit");
         HP--;
-        if (HP == 0){
+        if (HP == 0) {
             dead = true;
-            Game.boosFight = false;
-            nextLevel = true;
+            Game.bossFight = false; // leave boss fight
+            nextLevel = true; // go to next level
         }
     }
 

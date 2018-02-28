@@ -13,7 +13,7 @@ public class Constants {
     public static final double DT = DELAY / 1000.0;
     public static final Dimension FRAME_SIZE = new Dimension(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
 
-    public static Image ASTEROID1, MILKYWAY1, MILKYWAY2, PLAYERSHIP, SAUCER1, SAUCER2, SAUCER3, SAUCER4,PLAYERBULLET, SAUCERBULLET;
+    public static Image ASTEROID1, MILKYWAY1, MILKYWAY2, PLAYERSHIP, SAUCER1, SAUCER2, SAUCER3, SAUCER4, PLAYERBULLET, SAUCERBULLET;
 
     static {
         try {
@@ -26,7 +26,7 @@ public class Constants {
             SAUCER3 = ImageManager.loadImage("alien3");
             SAUCER4 = ImageManager.loadImage("alien4");
             PLAYERBULLET = ImageManager.loadImage("playerBullet");
-            SAUCERBULLET= ImageManager.loadImage("playerBullet");
+            SAUCERBULLET = ImageManager.loadImage("playerBullet");
         } catch (IOException e) {
             e.printStackTrace();
         }

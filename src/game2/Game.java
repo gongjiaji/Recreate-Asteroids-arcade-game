@@ -16,20 +16,26 @@ public class Game {
     private static PlayerShip playerShip;
     private static Keys ctrl;
     public static List<GameObject> objects;
+    public static List<Saucer> saucers;
     public static int score = 0;
-    public static int life = 3;
+    public static int life = 30;
     private static int bonus = 0;
     private static int award_threshold = 9;
     public static int level = 1;
     public static boolean over = false; // 0 playing 1 dead 2 restart
-    private Saucer saucer_1 = null;
-    private Saucer saucer_2 = null;
-    private Saucer saucer_3 = null;
-    private Saucer saucer_4 = null;
-    public static boolean boosFight = false;
+    private Saucer saucer_1 = new Saucer(new RotateNShoot());
+    private Saucer saucer_2 = new Saucer(new RotateNShoot());
+    private Saucer saucer_3 = new Saucer(new RotateNShoot());
+    private Saucer saucer_4 = new Saucer(new RotateNShoot());
+    public static boolean bossFight = false;
 
     public Game() {
         objects = new ArrayList<>(); //store all game objects
+        saucers = new ArrayList<>();
+        saucers.add(saucer_1);
+        saucers.add(saucer_2);
+        saucers.add(saucer_3);
+        saucers.add(saucer_4);
         for (int i = 0; i < N_INITIAL_ASTEROIDS; i++) {
             objects.add(Asteroid.makeRandomAsteroid());
         }
@@ -75,7 +81,6 @@ public class Game {
                 alive.addAll(Asteroid.splits);
                 Asteroid.splits.clear();
             }
-
         }
         synchronized (Game.class) {
             objects.clear();
@@ -95,33 +100,36 @@ public class Game {
                 i = 1000;
             }
         }
-        if (i == 0 && !over) {
-            if (saucer_1 == null && saucer_2 == null && saucer_3 == null && saucer_4 == null) {
+        if (i == 0 && !over) { // clear all asteroids
+            if (!bossFight) { // if not boss fight , start boss fight
                 switch (level) {
                     case 1:
-                        saucer_1 = new Saucer(new RotateNShoot());
+                        System.out.println("enter 1");
                         objects.add(saucer_1);
-                        Game.boosFight = true;
+                        Saucer.HP = 20;
+                        Game.bossFight = true; // fighting boss
                         break;
                     case 2:
-                        saucer_2 = new Saucer(new RotateNShoot());
+                        System.out.println("enter 2");
                         objects.add(saucer_2);
-                        Game.boosFight = true;
+                        Saucer.HP = 40;
+                        Game.bossFight = true;
                         break;
                     case 3:
-                        saucer_3 = new Saucer(new RotateNShoot());
                         objects.add(saucer_3);
-                        Game.boosFight = true;
+                        Game.bossFight = true;
+                        Saucer.HP = 50;
                         break;
                     case 4:
-                        saucer_4 = new Saucer(new RotateNShoot());
                         objects.add(saucer_4);
-                        Game.boosFight = true;
+                        Game.bossFight = true;
+                        Saucer.HP = 80;
                         break;
                 }
             } else {
-                if (Saucer.nextLevel) {
+                if (Saucer.nextLevel) { // saucer dead
                     levelup();
+                    bossFight = false;
                     Saucer.nextLevel = false;
                 }
             }
@@ -145,7 +153,10 @@ public class Game {
     private void levelup() {
         objects.clear();
         level++;
-        N_INITIAL_ASTEROIDS += 2;
+        if (level > 4){
+            over = true;
+        }
+//        N_INITIAL_ASTEROIDS += 2;
         award_threshold += 10;
         Bullet.FLYINGTIME += 500;
         for (int i = 0; i < N_INITIAL_ASTEROIDS; i++) {
@@ -157,11 +168,16 @@ public class Game {
     // end of game
     public static String over() {
         over = true;
-        for (GameObject o : objects) {
-            o.dead = true;
+        if (level <= 4){
+            for (GameObject o : objects) {
+                o.dead = true;
+            }
+            return " Game Over ! \r Score: " + score;
         }
-        return " Game Over ! \r Score: " + score;
+        else return "牛逼! \r" + score;
+
     }
+
 
     public static void restart() {
         N_INITIAL_ASTEROIDS = 5;
@@ -182,4 +198,5 @@ public class Game {
         objects.add(playerShip);
         over = false;
     }
+
 }
