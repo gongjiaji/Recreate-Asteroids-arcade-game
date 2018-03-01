@@ -28,10 +28,12 @@ public class SoundManager {
     public final static Clip beat2 = getClip("beat2");
     public final static Clip extraShip = getClip("extraShip");
     public final static Clip fire = getClip("fire");
+    public final static Clip saucer_fire = getClip("biu");
     public final static Clip saucerBig = getClip("saucerBig");
     public final static Clip saucerSmall = getClip("saucerSmall");
     public final static Clip thrust = getClip("thrust");
     public final static Clip bgm = getClip("bgm"); // © Jackpot - The Fat Rat
+
 
     public final static Clip[] clips = {bangLarge, bangMedium, bangSmall, beat1, beat2,
             extraShip, fire, saucerBig, saucerSmall, thrust};

@@ -9,7 +9,7 @@ public class Constants {
     public static final int FRAME_WIDTH = 1000;
     public static final int FRAME_HEIGHT = 750;
     public static final int DRAWING_SCALE = 1;
-    public static final int DELAY = 20;
+    public static final int DELAY = 20; //0.02s
     public static final double DT = DELAY / 1000.0;
     public static final Dimension FRAME_SIZE = new Dimension(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
 
@@ -26,7 +26,7 @@ public class Constants {
             SAUCER3 = ImageManager.loadImage("alien3");
             SAUCER4 = ImageManager.loadImage("alien4");
             PLAYERBULLET = ImageManager.loadImage("playerBullet");
-            SAUCERBULLET = ImageManager.loadImage("playerBullet");
+            SAUCERBULLET = ImageManager.loadImage("enemy_beam");
         } catch (IOException e) {
             e.printStackTrace();
         }

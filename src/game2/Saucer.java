@@ -19,6 +19,8 @@ public class Saucer extends Ship {
     private Image sau4 = Constants.SAUCER4;  //200 x 200 px
     public static int HP;
     public static boolean nextLevel = false;
+    private static final double STEER_RATE = 2 * Math.PI;
+    int i = 0;
 
     Saucer(Controller ctrl) {
         super(new Vector2D(FRAME_WIDTH / 2, 50), new Vector2D(0, 0), RADIUS);
@@ -29,8 +31,9 @@ public class Saucer extends Ship {
     }
 
     public void update() {
-//        position.x += Math.random() * 200 - 100;
-        position.x += 3;
+        position.x += ctrl.action().move_x;
+        position.y += ctrl.action().move_y;
+//        direction = direction.rotate(ctrl.action().turn_s * DT * STEER_RATE * 0.1);
         if (ctrl.action().shoot_s) {
             mkBullet();
             ctrl.action().shoot_s = false;
@@ -41,18 +44,24 @@ public class Saucer extends Ship {
     @Override
     public Bullet mkBullet() {
         bullet = new Bullet(new Vector2D(position), new Vector2D(velocity));
+
+        i++;
+        System.out.println(i);
         bullet.tag = "s";
-        bullet.radius = 2;
-        bullet.position.addScaled(direction, 105);// avoid immediate collision with playerShip
-        bullet.velocity.addScaled(direction, 30);
+        bullet.radius = 5;
+        bullet.position.addScaled(direction, 120);// avoid immediate collision with playerShip
+        bullet.velocity.addScaled(direction, 300);
         Date iniTime = new Date();
         bullet.time1 = iniTime.getTime();
+        SoundManager.play(SoundManager.saucer_fire);
         return bullet;
     }
 
     @Override
     public void draw(Graphics2D g) {
         AffineTransform sauTransf = new AffineTransform();
+        double rot = direction.angle() + Math.PI / 2;
+        sauTransf.rotate(rot, position.x, position.y);
         sauTransf.translate(-sau.getWidth(null) / 2, -sau.getHeight(null) / 2);
         sauTransf.translate(position.x, position.y);
         switch (Game.level) {

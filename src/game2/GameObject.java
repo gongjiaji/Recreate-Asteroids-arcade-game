@@ -40,7 +40,9 @@ abstract public class GameObject {
         if (this.getClass() != other.getClass() && this.overlap(other)) {
             if (this.toString().equals("bullet_s") && other.toString().equals("asteroid") ||
                     this.toString().equals("Saucer") && other.toString().equals("asteroid") ||
-                    this.toString().equals("asteroid") && other.toString().equals("Saucer")
+                    this.toString().equals("asteroid") && other.toString().equals("Saucer") ||
+                    this.toString().equals("bullet_s") && other.toString().equals("Saucer") ||
+                    this.toString().equals("Player") && other.toString().equals("Saucer")
                     ) {
             } else {
                 other.hit();

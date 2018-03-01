@@ -18,15 +18,15 @@ public class Game {
     public static List<GameObject> objects;
     public static List<Saucer> saucers;
     public static int score = 0;
-    public static int life = 30;
+    public static int life = 3000;
     private static int bonus = 0;
     private static int award_threshold = 9;
     public static int level = 1;
     public static boolean over = false; // 0 playing 1 dead 2 restart
-    private Saucer saucer_1 = new Saucer(new RotateNShoot());
-    private Saucer saucer_2 = new Saucer(new RotateNShoot());
-    private Saucer saucer_3 = new Saucer(new RotateNShoot());
-    private Saucer saucer_4 = new Saucer(new RotateNShoot());
+    public static Saucer saucer_1 = new Saucer(new Saucer_Action1());
+    private Saucer saucer_2 = new Saucer(new Saucer_Action2());
+    private Saucer saucer_3 = new Saucer(new Saucer_Action3());
+    private Saucer saucer_4 = new Saucer(new Saucer_Action4());
     public static boolean bossFight = false;
 
     public Game() {
@@ -158,7 +158,7 @@ public class Game {
         }
 //        N_INITIAL_ASTEROIDS += 2;
         award_threshold += 10;
-        Bullet.FLYINGTIME += 500;
+        Bullet.FLYINGTIME_P += 500;
         for (int i = 0; i < N_INITIAL_ASTEROIDS; i++) {
             objects.add(Asteroid.makeRandomAsteroid());
         }
@@ -185,7 +185,7 @@ public class Game {
         score = 0;
         level = 1;
         award_threshold = 9;
-        Bullet.FLYINGTIME = 5000;
+        Bullet.FLYINGTIME_P = 5000;
 
         playerShip.position = new Vector2D(FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
         playerShip.velocity = new Vector2D(0, 0);
