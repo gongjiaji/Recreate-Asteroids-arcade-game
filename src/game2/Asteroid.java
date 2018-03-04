@@ -18,7 +18,7 @@ public class Asteroid extends GameObject {
     private static final int RADIUS2 = 14;
     public static List<Asteroid> splits = new ArrayList<>();
     private static final double MAX_SPEED = 100;
-    private Image as = Constants.ASTEROID1;  //28 x 24 px
+    private Image as = Constants.ASTEROID1;  // 26 x 26
     private static int angle = 0;
 
 

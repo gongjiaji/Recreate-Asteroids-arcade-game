@@ -44,7 +44,6 @@ public class Saucer extends Ship {
     @Override
     public Bullet mkBullet() {
         bullet = new Bullet(new Vector2D(position), new Vector2D(velocity));
-
         i++;
         System.out.println(i);
         bullet.tag = "s";

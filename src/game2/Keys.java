@@ -7,10 +7,15 @@ import java.awt.event.KeyEvent;
 
 public class Keys extends KeyAdapter implements Controller {
     Action action;
+    public static boolean onhold = false;
+    public static boolean charge = false;
+    public static int hold = 0;
+    public static boolean onsheild = false;
 
     Keys() {
         action = new Action();
     }
+
 
     @Override
     public Action action() {
@@ -33,13 +38,20 @@ public class Keys extends KeyAdapter implements Controller {
                 action.turn = 1;
                 break;
             case KeyEvent.VK_SPACE:
-                action.shoot = true;
+                hold++;
+                onhold = hold > 5;
                 break;
             case KeyEvent.VK_R:
                 Game.restart();
                 break;
             case KeyEvent.VK_DOWN:
                 action.teleport = true;
+                break;
+            case KeyEvent.VK_C:
+                action.shield = !action.shield;
+                break;
+            case KeyEvent.VK_B:
+                action.boom = true;
                 break;
         }
     }
@@ -59,8 +71,15 @@ public class Keys extends KeyAdapter implements Controller {
             case KeyEvent.VK_RIGHT:
                 action.turn = 0;
                 break;
-            case KeyEvent.VK_SPACE:
-                action.shoot = false;
+            case KeyEvent.VK_SPACE:  // release space button
+                if (hold > 10) {
+                    onhold = true;  // charge bullet
+                    action.shoot = true;
+                } else if (hold < 3) {   // normal bullet
+                    onhold = false;
+                    action.shoot = true;
+                }
+                hold = 0;
                 break;
             case KeyEvent.VK_DOWN:
                 action.teleport = false;

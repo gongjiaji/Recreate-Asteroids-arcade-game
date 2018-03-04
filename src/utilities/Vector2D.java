@@ -53,14 +53,17 @@ public final class Vector2D {
     public double angle(Vector2D other){
         double angle1 = Math.atan2(this.y, this.x);
         double angle2 = Math.atan2(other.y, other.x);
-        double differ = angle1 - angle2;
+        double differ = angle2 - angle1;
         if (differ > Math.PI){
-            return Math.PI * 2 - differ;
+            differ -= Math.PI * 2;
+//            return differ;
         }
         if (differ < -Math.PI){
-            return Math.PI * 2 + differ;
+            differ += 2 * Math.PI;
+//            return Math.PI * 2 + differ;
         }
         return differ;
+//        return Math.atan2(this.y - other.y, this.x - other.x);
     }
 
     public Vector2D add(Vector2D v){

@@ -28,6 +28,7 @@ public class Game {
     private Saucer saucer_3 = new Saucer(new Saucer_Action3());
     private Saucer saucer_4 = new Saucer(new Saucer_Action4());
     public static boolean bossFight = false;
+    public static Shield shield;
 
     public Game() {
         objects = new ArrayList<>(); //store all game objects
@@ -42,6 +43,7 @@ public class Game {
         ctrl = new Keys();
         playerShip = new PlayerShip(ctrl);
         objects.add(playerShip);
+        shield = new Shield();
     }
 
     public static void main(String[] args) throws Exception {
@@ -62,6 +64,14 @@ public class Game {
     public void update() {
         int i = 0;
         List<GameObject> alive = new ArrayList<>();
+        if (!shield.dead) {
+            alive.add(shield);
+        } else {
+            alive.remove(shield);
+        }
+        if (Shield.sp < 0) {
+            alive.remove(shield);
+        }
         for (GameObject o : objects) {
             o.update();
             if (!o.dead) {
@@ -153,7 +163,7 @@ public class Game {
     private void levelup() {
         objects.clear();
         level++;
-        if (level > 4){
+        if (level > 4) {
             over = true;
         }
 //        N_INITIAL_ASTEROIDS += 2;
@@ -168,13 +178,12 @@ public class Game {
     // end of game
     public static String over() {
         over = true;
-        if (level <= 4){
+        if (level <= 4) {
             for (GameObject o : objects) {
                 o.dead = true;
             }
             return " Game Over ! \r Score: " + score;
-        }
-        else return "牛逼! \r" + score;
+        } else return "牛逼! \r" + score;
 
     }
 

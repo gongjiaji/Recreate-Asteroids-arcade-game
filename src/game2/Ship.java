@@ -9,7 +9,6 @@ public abstract class Ship extends GameObject{
     Controller controller;
     long timeLastShot;
     Bullet bullet;
-    Vector2D direction;
 
 
     public Ship(Vector2D position, Vector2D velocity, double radius) {
