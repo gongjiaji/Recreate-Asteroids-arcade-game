@@ -7,7 +7,6 @@ import java.awt.*;
 import static game2.Constants.DT;
 import static game2.Constants.FRAME_HEIGHT;
 import static game2.Constants.FRAME_WIDTH;
-import static java.lang.Math.random;
 
 abstract public class GameObject {
     public Vector2D position;
@@ -29,7 +28,7 @@ abstract public class GameObject {
     public void update() {
         if (this.toString().equals("pc")) {
             if (Keys.onhold) {
-                position = PlayerShip.p.addScaled(new Vector2D(0,-1), 30);
+                position = PlayerShip.p.addScaled(new Vector2D(0, -1), 30);
             }
         } else {
             position.addScaled(velocity, DT);
@@ -54,19 +53,66 @@ abstract public class GameObject {
                     this.toString().equals("bullet_s") && other.toString().equals("Saucer") ||
                     this.toString().equals("Player") && other.toString().equals("Saucer") ||
                     this.toString().equals("shield") && other.toString().equals("Player") ||
-                    this.toString().equals("Player") && other.toString().equals("shield")||
+                    this.toString().equals("Player") && other.toString().equals("shield") ||
                     this.toString().equals("shield") && other.toString().equals("bullet_p") ||
-                    this.toString().equals("bullet_p") && other.toString().equals("shield")||
+                    this.toString().equals("bullet_p") && other.toString().equals("shield") ||
+                    this.toString().equals("bullet_p") && other.toString().equals("star") ||
+                    this.toString().equals("bullet_p") && other.toString().equals("blood") ||
+                    this.toString().equals("bullet_p") && other.toString().equals("shield_item") ||
+                    this.toString().equals("bullet_pc1") && other.toString().equals("star") ||
+                    this.toString().equals("bullet_pc1") && other.toString().equals("blood") ||
+                    this.toString().equals("bullet_pc1") && other.toString().equals("shield_item") ||
                     this.toString().equals("shield") && other.toString().equals("bullet_pc") ||
                     this.toString().equals("shield") && other.toString().equals("bullet_pc1") ||
-                    this.toString().equals("shield") && other.toString().equals("asteroid")
-
+                    this.toString().equals("shield") && other.toString().equals("asteroid_big") ||
+                    this.toString().equals("shield") && other.toString().equals("asteroid_med") ||
+                    this.toString().equals("shield") && other.toString().equals("asteroid_sma") ||
+                    this.toString().equals("shield") && other.toString().equals("Saucer") ||
+                    this.toString().equals("star") && other.toString().equals("Saucer") ||
+                    this.toString().equals("blood") && other.toString().equals("Saucer") ||
+                    this.toString().equals("shield_item") && other.toString().equals("Saucer") ||
+                    this.toString().equals("star") && other.toString().equals("asteroid_big") ||
+                    this.toString().equals("blood") && other.toString().equals("asteroid_big") ||
+                    this.toString().equals("shield_item") && other.toString().equals("asteroid_big") ||
+                    this.toString().equals("star") && other.toString().equals("asteroid_med") ||
+                    this.toString().equals("blood") && other.toString().equals("asteroid_med") ||
+                    this.toString().equals("shield_item") && other.toString().equals("asteroid_med") ||
+                    this.toString().equals("star") && other.toString().equals("asteroid_sma") ||
+                    this.toString().equals("blood") && other.toString().equals("asteroid_sma") ||
+                    this.toString().equals("shield_item") && other.toString().equals("asteroid_sma") ||
+                    this.toString().equals("asteroid_big") && other.toString().equals("star") ||
+                    this.toString().equals("asteroid_big") && other.toString().equals("blood") ||
+                    this.toString().equals("asteroid_big") && other.toString().equals("shield_item") ||
+                    this.toString().equals("asteroid_med") && other.toString().equals("star") ||
+                    this.toString().equals("asteroid_med") && other.toString().equals("blood") ||
+                    this.toString().equals("asteroid_med") && other.toString().equals("shield_item") ||
+                    this.toString().equals("asteroid_sma") && other.toString().equals("star") ||
+                    this.toString().equals("asteroid_sma") && other.toString().equals("blood") ||
+                    this.toString().equals("asteroid_sma") && other.toString().equals("shield_item") ||
+                    this.toString().equals("star") && other.toString().equals("Player") ||
+                    this.toString().equals("blood") && other.toString().equals("Player") ||
+                    this.toString().equals("shield_item") && other.toString().equals("Player")
                     ) {
             } else {
-                if (this.toString().equals("asteroid") && other.toString().equals("shield")){
+                // shield push asteroid away
+                if (this.toString().equals("asteroid_big") && other.toString().equals("shield") ||
+                        this.toString().equals("asteroid_med") && other.toString().equals("shield") ||
+                        this.toString().equals("asteroid_sma") && other.toString().equals("shield")
+                        ) {
                     this.position.addScaled(PlayerShip.direction, 100);
+                    other.hit();
                 }
-                other.hit();
+
+                // force filed
+                if (this.toString().equals("force")){
+                    other.velocity.addScaled(new Vector2D(0, 1), 3);
+                } else
+                if (other.toString().equals("force")){
+                    this.velocity.addScaled(new Vector2D(0, 1), 3);
+                }else{
+                    other.hit();
+
+                }
             }
         }
     }

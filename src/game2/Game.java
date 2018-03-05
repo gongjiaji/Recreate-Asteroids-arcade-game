@@ -14,11 +14,12 @@ import static game2.Constants.FRAME_WIDTH;
 public class Game {
     private static int N_INITIAL_ASTEROIDS = 1;
     private static PlayerShip playerShip;
+    private static ForceFieldGravity force;
     private static Keys ctrl;
     public static List<GameObject> objects;
     public static List<Saucer> saucers;
     public static int score = 0;
-    public static int life = 3000;
+    public static int life = 3;
     private static int bonus = 0;
     private static int award_threshold = 9;
     public static int level = 1;
@@ -29,6 +30,8 @@ public class Game {
     private Saucer saucer_4 = new Saucer(new Saucer_Action4());
     public static boolean bossFight = false;
     public static Shield shield;
+    public static HighScore highScore;
+
 
     public Game() {
         objects = new ArrayList<>(); //store all game objects
@@ -44,6 +47,9 @@ public class Game {
         playerShip = new PlayerShip(ctrl);
         objects.add(playerShip);
         shield = new Shield();
+        force = new ForceFieldGravity();
+        objects.add(force);
+        highScore = new HighScore();
     }
 
     public static void main(String[] args) throws Exception {
@@ -52,12 +58,13 @@ public class Game {
 
         new JEasyFrame(view, "Basic game").addKeyListener(ctrl);
 
-        SoundManager.play(SoundManager.bgm);
+//        SoundManager.play(SoundManager.bgm);
 
         while (true) {
             game.update();
             view.repaint();
             Thread.sleep(DELAY);
+
         }
     }
 
@@ -73,6 +80,13 @@ public class Game {
             alive.remove(shield);
         }
         for (GameObject o : objects) {
+            if (ctrl.action.boom && PlayerShip.booms > 0) { //  throw boom
+                // remove bullets
+                if (o.toString().equals("bullet_s")) {
+                    o.dead = true;
+                }
+            }
+
             o.update();
             if (!o.dead) {
                 alive.add(o);
@@ -90,6 +104,11 @@ public class Game {
             if (!Asteroid.splits.isEmpty()) {
                 alive.addAll(Asteroid.splits);
                 Asteroid.splits.clear();
+            }
+
+            if (!Asteroid.items.isEmpty()) {
+                alive.addAll(Asteroid.items);
+                Asteroid.items.clear();
             }
         }
         synchronized (Game.class) {
@@ -114,13 +133,11 @@ public class Game {
             if (!bossFight) { // if not boss fight , start boss fight
                 switch (level) {
                     case 1:
-                        System.out.println("enter 1");
                         objects.add(saucer_1);
                         Saucer.HP = 20;
                         Game.bossFight = true; // fighting boss
                         break;
                     case 2:
-                        System.out.println("enter 2");
                         objects.add(saucer_2);
                         Saucer.HP = 40;
                         Game.bossFight = true;
@@ -173,18 +190,21 @@ public class Game {
             objects.add(Asteroid.makeRandomAsteroid());
         }
         objects.add(playerShip);
+        force = new ForceFieldGravity();
+        objects.add(force);
     }
 
     // end of game
     public static String over() {
         over = true;
+        highScore = new HighScore();
+        highScore.write_score();
         if (level <= 4) {
             for (GameObject o : objects) {
                 o.dead = true;
             }
             return " Game Over ! \r Score: " + score;
-        } else return "牛逼! \r" + score;
-
+        } else return "congratulation! \r Score: " + score;
     }
 
 
@@ -195,16 +215,18 @@ public class Game {
         level = 1;
         award_threshold = 9;
         Bullet.FLYINGTIME_P = 5000;
+        playerShip.dead = true;
+        force.dead = true;
 
-        playerShip.position = new Vector2D(FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
-        playerShip.velocity = new Vector2D(0, 0);
-        playerShip.direction = new Vector2D(0, -1);
+        playerShip = new PlayerShip(ctrl);
 
         for (int i = 0; i < N_INITIAL_ASTEROIDS; i++) {
             objects.add(Asteroid.makeRandomAsteroid());
         }
         playerShip.dead = false;
+        force = new ForceFieldGravity();
         objects.add(playerShip);
+        objects.add(force);
         over = false;
     }
 

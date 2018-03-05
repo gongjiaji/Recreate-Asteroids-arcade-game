@@ -20,20 +20,17 @@ public class Saucer extends Ship {
     public static int HP;
     public static boolean nextLevel = false;
     private static final double STEER_RATE = 2 * Math.PI;
-    int i = 0;
 
     Saucer(Controller ctrl) {
         super(new Vector2D(FRAME_WIDTH / 2, 50), new Vector2D(0, 0), RADIUS);
         this.ctrl = ctrl;
         direction = new Vector2D(0, 1);
         dead = false;
-        System.out.println("new saucer created");
     }
 
     public void update() {
         position.x += ctrl.action().move_x;
         position.y += ctrl.action().move_y;
-//        direction = direction.rotate(ctrl.action().turn_s * DT * STEER_RATE * 0.1);
         if (ctrl.action().shoot_s) {
             mkBullet();
             ctrl.action().shoot_s = false;
@@ -44,8 +41,6 @@ public class Saucer extends Ship {
     @Override
     public Bullet mkBullet() {
         bullet = new Bullet(new Vector2D(position), new Vector2D(velocity));
-        i++;
-        System.out.println(i);
         bullet.tag = "s";
         bullet.radius = 5;
         bullet.position.addScaled(direction, 120);// avoid immediate collision with playerShip

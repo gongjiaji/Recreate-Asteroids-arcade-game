@@ -32,11 +32,16 @@ public class View extends JComponent {
 
             g.setColor(Color.red);
             g.setFont(new Font("Monaca", Font.BOLD, 50));
-            g.drawString(Game.over(), 0, getHeight() / 2);
+            g.drawString(Game.over(), 190, 100);
 
             g.setColor(Color.white);
-            g.setFont(new Font("Monaca", Font.ITALIC, 40));
-            g.drawString("Press 'R' to restart", getWidth() / 2 - 180, getHeight() / 2 + 100);
+            g.setFont(new Font("Monaca", Font.ITALIC, 30));
+            g.drawString("Press 'R' to restart", 300, 650);
+            g.drawString("Top 10", 400, 160);
+            int y = 180;
+            for (String line : HighScore.top10().split("\n"))
+                g.drawString(line, 350, y += g.getFontMetrics().getHeight());
+
         } else { // alive
             Graphics2D g = (Graphics2D) g0;
             g.drawImage(im, bgTransf, null);

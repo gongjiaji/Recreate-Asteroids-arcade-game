@@ -84,6 +84,7 @@ public class Keys extends KeyAdapter implements Controller {
             case KeyEvent.VK_DOWN:
                 action.teleport = false;
                 break;
+
         }
     }
 }

@@ -17,9 +17,11 @@ public class Asteroid extends GameObject {
     private static final int RADIUS1 = 20;
     private static final int RADIUS2 = 14;
     public static List<Asteroid> splits = new ArrayList<>();
+    public static List<Item> items = new ArrayList<>();
     private static final double MAX_SPEED = 100;
     private Image as = Constants.ASTEROID1;  // 26 x 26
     private static int angle = 0;
+
 
 
     private Asteroid(Vector2D position, Vector2D velocity) {
@@ -61,6 +63,7 @@ public class Asteroid extends GameObject {
     }
 
     public void hit() {
+
         // sound
         switch ((int) this.radius) {
             case RADIUS:
@@ -79,6 +82,7 @@ public class Asteroid extends GameObject {
             split();
         }
         Game.addScore();
+        loot();
     }
 
     private void split() {
@@ -92,6 +96,33 @@ public class Asteroid extends GameObject {
 
     @Override
     public String toString() {
-        return "asteroid";
+        String s = "";
+        switch ((int) radius) {
+            case RADIUS:
+                s = "asteroid_big";
+                break;
+            case RADIUS1:
+                s = "asteroid_med";
+                break;
+            case RADIUS2:
+                s = "asteroid_sma";
+                break;
+        }
+        return s;
+    }
+
+    public void loot(){
+        if(radius == RADIUS2){
+            Item item = new Item(position, velocity, 15);
+            int n = (int)(Math.random() * 10);
+            if (n == 1 || n == 2 || n == 0 || n == 9){
+                item.tag = 1;
+            }else if (n == 3 || n == 4 || n == 5){
+                item.tag = 2;
+            }else if (n == 6 || n == 7 || n == 8){
+                item.tag = 3;
+            }
+            items.add(item);
+        }
     }
 }

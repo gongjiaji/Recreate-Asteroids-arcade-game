@@ -6,8 +6,6 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.Date;
 
-import static game2.Constants.DT;
-
 public class Bullet extends GameObject {
     public static final int RADIUS = 5;
     public static final int RADIUS_S = 5;

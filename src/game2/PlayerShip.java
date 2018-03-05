@@ -28,13 +28,12 @@ public class PlayerShip extends Ship {
     public static Vector2D direction;
     public static Vector2D velocity = new Vector2D(0, 0);
     public static int booms = 3; // the amount of booms holding
+    private final double SHIELD_REGEN = 0.5;
 
     public PlayerShip(Controller ctrl) {
         super(p, velocity, RADIUS);
-//        position = new Vector2D(FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
         this.ctrl = ctrl;
         direction = new Vector2D(0, -1);
-
     }
 
     public void update() {
@@ -53,10 +52,9 @@ public class PlayerShip extends Ship {
                 Shield.sp = -1;
                 Action.shield = false;
             }
-            System.out.println(Shield.sp);
         } else if (!ctrl.action().shield) {
             Game.shield.dead = true;
-            Shield.sp += 0.9;   //regeneration rate
+            Shield.sp += SHIELD_REGEN;   //regeneration rate
             if (Shield.sp >= 100) {
                 Shield.sp = 100;
             }
@@ -96,31 +94,32 @@ public class PlayerShip extends Ship {
             }
 
             // boom
-            if (ctrl.action().boom && booms > 0) {
-                g.setColor(Color.MAGENTA);
-                g.drawOval((int) (position.x - boomRadius), (int) (position.y - boomRadius), 2 * boomRadius, 2 * boomRadius);
-                boomRadius += 5;
-                if (boomRadius > 600) {
-                    booms--;
-                    boomRadius = 0;
-                    ctrl.action().boom = false;
+            if (booms > 0 && Game.bossFight) {
+                if (ctrl.action().boom) {
+                    g.setColor(Color.MAGENTA);
+                    g.drawOval((int) (position.x - boomRadius), (int) (position.y - boomRadius), 2 * boomRadius, 2 * boomRadius);
+                    boomRadius += 40;
+                    if (boomRadius > 600) {
+                        boomRadius = 0;
+                        booms--;
+                        ctrl.action().boom = false;
+                    }
                 }
             }
+        }
 
-            // boom bar
+        // boom bar
+        if (Game.bossFight) {
             g.setColor(Color.YELLOW);
             switch (booms) {
                 case 3:
                     g.fillRect((int) (position.x - pship.getWidth(null) / 2 + 37), (int) (position.y + pship.getHeight(null) / 2 + 25), 15, 5);
-
                 case 2:
                     g.fillRect((int) (position.x - pship.getWidth(null) / 2 + 18.5), (int) (position.y + pship.getHeight(null) / 2 + 25), 15, 5);
                 case 1:
                     g.fillRect((int) (position.x - pship.getWidth(null) / 2), (int) (position.y + pship.getHeight(null) / 2 + 25), 15, 5);
-
                     break;
             }
-
         }
 
     }
