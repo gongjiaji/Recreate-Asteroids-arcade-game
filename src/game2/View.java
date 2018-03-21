@@ -53,6 +53,10 @@ public class View extends JComponent {
             }
             g.drawString("Life: " + Game.life, 100, 20);
             g.drawString("Level: " + Game.level, 180, 20);
+            g.drawString("Charge bullet: Hold SPACE", 380, 20);
+            g.drawString("Shield: C", 560, 20);
+            g.drawString("Teleport: ↓", 650, 20);
+            g.drawString("BOMB: B", 750, 20);
 
             if (Game.bossFight) { // DRAW HP BAR
                 g.setColor(Color.WHITE);

@@ -12,16 +12,16 @@ import static game2.Constants.FRAME_HEIGHT;
 import static game2.Constants.FRAME_WIDTH;
 
 public class Game {
-    private static int N_INITIAL_ASTEROIDS = 1;
+    private static int N_INITIAL_ASTEROIDS = 5;
     private static PlayerShip playerShip;
     private static ForceFieldGravity force;
     private static Keys ctrl;
     public static List<GameObject> objects;
     public static List<Saucer> saucers;
     public static int score = 0;
-    public static int life = 3;
+    public static int life = 10;
     private static int bonus = 0;
-    private static int award_threshold = 9;
+    private static int award_threshold = 19;
     public static int level = 1;
     public static boolean over = false; // 0 playing 1 dead 2 restart
     public static Saucer saucer_1 = new Saucer(new Saucer_Action1());
@@ -64,7 +64,6 @@ public class Game {
             game.update();
             view.repaint();
             Thread.sleep(DELAY);
-
         }
     }
 
@@ -170,7 +169,7 @@ public class Game {
     public static void addScore() {
         score++;
         bonus++; // additional life will be given for every x scores
-        if (bonus > award_threshold) { // 10 scores +1 life
+        if (bonus > award_threshold) { // 20 scores +1 life
             life++;
             SoundManager.extraShip();
             bonus = 0;
@@ -183,8 +182,8 @@ public class Game {
         if (level > 4) {
             over = true;
         }
-//        N_INITIAL_ASTEROIDS += 2;
-        award_threshold += 10;
+        N_INITIAL_ASTEROIDS += 2;
+        award_threshold += 20;
         Bullet.FLYINGTIME_P += 500;
         for (int i = 0; i < N_INITIAL_ASTEROIDS; i++) {
             objects.add(Asteroid.makeRandomAsteroid());
@@ -210,13 +209,14 @@ public class Game {
 
     public static void restart() {
         N_INITIAL_ASTEROIDS = 5;
-        life = 3;
+        life = 10;
         score = 0;
         level = 1;
-        award_threshold = 9;
+        award_threshold = 19;
         Bullet.FLYINGTIME_P = 5000;
         playerShip.dead = true;
         force.dead = true;
+        bossFight = false;
 
         playerShip = new PlayerShip(ctrl);
 

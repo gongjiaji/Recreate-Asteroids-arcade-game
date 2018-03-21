@@ -22,8 +22,10 @@ public class ForceFieldGravity extends GameObject implements ForceField {
 
     @Override
     public void draw(Graphics2D g) {
-        g.setColor(Color.ORANGE);
-        g.drawOval(300, 400, 200, 200);
+        g.setColor(Color.BLACK);
+        for (int i = 0; i < 30; i+=2) {
+            g.drawOval(300, 400, 200+i/2, 200+i/2);
+        }
     }
 
     @Override

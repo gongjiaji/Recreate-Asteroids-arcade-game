@@ -150,7 +150,7 @@ public class PlayerShip extends Ship {
     }
 
     public void teleport() {
-        position = new Vector2D(random() * FRAME_HEIGHT, random() * FRAME_WIDTH);
+        position.set(random() * FRAME_HEIGHT, random() * FRAME_WIDTH);
         ctrl.action().teleport = false;
     }
 

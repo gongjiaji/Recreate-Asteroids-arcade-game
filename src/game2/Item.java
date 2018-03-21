@@ -29,7 +29,7 @@ public class Item extends GameObject {
                 itemTrans.translate(position.x, position.y);
                 g.drawImage(blood_img, itemTrans, null);
                 break;
-            case 3: // bullet
+            case 3: // shield
                 itemTrans.translate(-bullet_img.getWidth(null) / 2, -bullet_img.getHeight(null) / 2);
                 itemTrans.translate(position.x, position.y);
                 g.drawImage(bullet_img, itemTrans, null);

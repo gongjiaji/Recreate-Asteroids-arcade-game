@@ -17,6 +17,4 @@ public class Action {
     public boolean shoot_s;
     public int move_x;
     public int move_y;
-
-
 }

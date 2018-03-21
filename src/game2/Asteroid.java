@@ -32,9 +32,9 @@ public class Asteroid extends GameObject {
         Vector2D p = new Vector2D(random() * FRAME_HEIGHT, random() * FRAME_WIDTH);
         Vector2D v = new Vector2D(random() * MAX_SPEED, random() * MAX_SPEED);
 
-        if (p.dist(new Vector2D(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT)) < 50) {
+        if (p.dist(new Vector2D(Constants.FRAME_WIDTH/2, Constants.FRAME_HEIGHT/2)) < 50) {
             System.out.println(p.toString());
-            p = new Vector2D(random() * FRAME_HEIGHT, random() * FRAME_WIDTH);
+            p.set(random() * FRAME_HEIGHT, random() * FRAME_WIDTH);
         }
         return new Asteroid(p, v);
     }
