@@ -2,6 +2,10 @@
 
 **Please note**: This is a university assignment, you are not allowed to copy this repo in any way if you are making the same assignment.
 
+![Asteroid](screenshot.jpg)
+![Asteroid](boss.jpg)
+
+
 # Introduction
 
 The game is recreation of classic arcade game Asteroid in Java, the player controls the spaceship to destroy asteroids and defeat evil saucers. 
@@ -92,6 +96,7 @@ The gravity field is fixed in somewhere of battlefield, it apply gravity to anyt
 
 **R**: restart 
 
+![Asteroid](highscore.jpg)
 
 
 # Implementation (assignment report)
