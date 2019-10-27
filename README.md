@@ -2,8 +2,8 @@
 
 **Please note**: This is a university assignment, you are not allowed to copy this repo in any way if you are making the same assignment.
 
-![Asteroid](screenshot.jpg)
-![Asteroid](boss.jpg)
+![Asteroid](screenshot.png)
+![Asteroid](boss.png)
 
 
 # Introduction
@@ -96,7 +96,7 @@ The gravity field is fixed in somewhere of battlefield, it apply gravity to anyt
 
 **R**: restart 
 
-![Asteroid](highscore.jpg)
+![Asteroid](highscore.png)
 
 
 # Implementation (assignment report)
