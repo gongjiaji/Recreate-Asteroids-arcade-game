@@ -6,7 +6,7 @@
 
 The game is recreation of classic arcade game Asteroid in Java, the player controls the spaceship to destroy asteroids and defeat evil saucers. 
 
-![Asteroid](https://www.iconspng.com/images/asteroids-video-games-1979/asteroids-video-games-1979.jpg)
+![Asteroid](asteroids-video-games-1979.jpg)
 
 Respect to the old time arcade games!
 
